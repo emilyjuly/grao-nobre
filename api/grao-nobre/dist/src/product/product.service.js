@@ -17,20 +17,32 @@ let ProductService = class ProductService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createProductDto) {
-        return 'This action adds a new product';
+    async create(createProductDto) {
+        return this.prisma.product.create({
+            data: createProductDto,
+        });
     }
-    findAll() {
-        return `This action returns all product`;
+    async findAll() {
+        return this.prisma.product.findMany({
+            orderBy: { createdAt: 'desc' },
+        });
     }
-    findOne(id) {
-        return `This action returns a #${id} product`;
+    async findOne(id) {
+        const product = await this.prisma.product.findUnique({ where: { id } });
+        if (!product)
+            throw new common_1.NotFoundException(`Produto ${id} não encontrado`);
+        return product;
     }
-    update(id, updateProductDto) {
-        return `This action updates a #${id} product`;
+    async update(id, updateProductDto) {
+        return this.prisma.product.update({
+            where: { id },
+            data: updateProductDto,
+        });
     }
-    remove(id) {
-        return `This action removes a #${id} product`;
+    async remove(id) {
+        return this.prisma.product.delete({
+            where: { id },
+        });
     }
 };
 exports.ProductService = ProductService;
