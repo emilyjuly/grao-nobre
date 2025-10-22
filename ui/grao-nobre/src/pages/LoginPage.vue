@@ -90,8 +90,10 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 import loginImage from '@/assets/login-image.jpg'
+import { useNotification } from 'naive-ui'
 
 const activeTab = ref('login')
+const notification = useNotification()
 
 const email = ref('')
 const password = ref('')
@@ -136,6 +138,11 @@ const handleSignup = async () => {
         signupError.value = 'Erro ao registrar usuário'
     } finally {
         loading.value = false
+        notification.success({
+            title: 'Sucesso',
+            content: 'Usuário registrado com sucesso! Por favor, faça login.',
+            duration: 3000
+        })
         clearFields()
         activeTab.value= 'login'
     }
