@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import api from '@/api/api'
 
 interface AuthState {
     token: string | null
@@ -12,7 +13,7 @@ export const useAuthStore = defineStore('auth', {
 
     actions: {
         async login(email: string, password: string) {
-            const res = await axios.post('http://localhost:3000/auth/login', {
+            const res = await axios.post(`${api}auth/login`, {
                 email,
                 password,
             })
@@ -22,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         async signUp(name: string, email: string, password: string, cell_phone_number: string) {
-            const res = await axios.post('http://localhost:3000/auth/register', {
+            const res = await axios.post(`${api}auth/register`, {
                 name,
                 email,
                 password,

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@css-render/vue3-ssr": "^0.15.14",
+    "@vicons/antd": "^0.13.0",
     "axios": "^1.12.2",
     "pinia": "^3.0.3",
     "vue": "^3.5.22",
