@@ -21,6 +21,18 @@ export const useAuthStore = defineStore('auth', {
             axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
         },
 
+        async signUp(name: string, email: string, password: string, cell_phone_number: string) {
+            const res = await axios.post('http://localhost:3000/auth/register', {
+                name,
+                email,
+                password,
+                cell_phone_number,
+            })
+            this.token = res.data.access_token
+            if (this.token) localStorage.setItem('token', this.token)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+        },
+
         logout() {
             this.token = null
             localStorage.removeItem('token')
