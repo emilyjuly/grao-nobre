@@ -9,6 +9,7 @@ async function bootstrap() {
         .setTitle('Grão Nobre API')
         .setDescription('A API do Grão Nobre')
         .setVersion('0.1')
+        .addBearerAuth()
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);
