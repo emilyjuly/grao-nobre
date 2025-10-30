@@ -14,8 +14,8 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Authorization',
   });
 
-  app.useStaticAssets(join(process.cwd(), 'uploads'), {
-    prefix: '/uploads/',
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+    prefix: '/uploads',
   });
 
   const config = new DocumentBuilder()
