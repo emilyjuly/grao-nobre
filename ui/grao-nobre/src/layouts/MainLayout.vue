@@ -6,8 +6,6 @@
             <nav class="nav-center">
                 <router-link to="/home" class="nav-link">Catálogo</router-link>
                 <router-link to="/cart" class="nav-link">Carrinho</router-link>
-                <router-link to="/orders" class="nav-link">Pedidos</router-link>
-                <router-link to="/profile" class="nav-link">Perfil</router-link>
             </nav>
 
             <n-button @click="logout" quaternary class="flex items-center gap-1">

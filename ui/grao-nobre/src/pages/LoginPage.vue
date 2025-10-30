@@ -134,10 +134,6 @@ const handleSignup = async () => {
         }
 
         await auth.signUp(signupName.value, signupEmail.value, signupPassword.value, signupCellPhoneNumber.value)
-    } catch (err: any) {
-        signupError.value = 'Erro ao registrar usuário'
-    } finally {
-        loading.value = false
         notification.success({
             title: 'Sucesso',
             content: 'Usuário registrado com sucesso! Por favor, faça login.',
@@ -145,6 +141,10 @@ const handleSignup = async () => {
         })
         clearFields()
         activeTab.value= 'login'
+    } catch (err: any) {
+        signupError.value = 'Erro ao registrar usuário'
+    } finally {
+        loading.value = false
     }
 }
 

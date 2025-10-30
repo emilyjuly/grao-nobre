@@ -4,7 +4,7 @@ import LoginPage from "@/pages/LoginPage.vue";
 import { useAuthStore } from "@/stores/auth";
 import MainLayout from "@/layouts/MainLayout.vue";
 // import RegisterPage from '@/pages/RegisterPage.vue'
-// import CartPage from '@/pages/CartPage.vue'
+import CartPage from '@/pages/CartPage.vue'
 // import CheckoutPage from '@/pages/CheckoutPage.vue'
 
 const router = createRouter({
@@ -20,6 +20,18 @@ const router = createRouter({
                     name: "home",
                     meta: { requiresAuth: true },
                     component: HomePage,
+                },
+            ],
+        },
+        {
+            path: "/cart",
+            component: MainLayout,
+            children: [
+                {
+                    path: "",
+                    name: "cart",
+                    meta: { requiresAuth: true },
+                    component: CartPage,
                 },
             ],
         },
