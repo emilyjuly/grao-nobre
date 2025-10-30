@@ -18,7 +18,7 @@
                 <n-card v-for="product in filteredProducts" :key="product.id" class="card">
                     <template #cover>
                         <div class="image-container">
-                            <img v-if="product.imageUrl" :src="`https://grao-nobre-api.onrender.com${product.imageUrl}`"
+                            <img v-if="product.imageUrl" :src="product.imageUrl"
                                 alt="Imagem do produto" class="product-image" />
                         </div>
                     </template>
