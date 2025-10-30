@@ -12,19 +12,48 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const client_1 = require("@prisma/client");
 let OrderService = class OrderService {
     prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createOrderDto) {
-        return 'This action adds a new order';
+    async create(createOrderDto) {
+        const { userId, addressId, total, items, paymentType } = createOrderDto;
+        const order = await this.prisma.order.create({
+            data: {
+                total: new client_1.Prisma.Decimal(total),
+                status: 'Pendente',
+                user: { connect: { id: userId } },
+                address: { connect: { id: addressId } },
+                items: {
+                    create: items.map((item) => ({
+                        quantity: item.quantity,
+                        price: item.price,
+                        product: { connect: { id: item.id } },
+                    })),
+                },
+                payment: {
+                    create: {
+                        type: paymentType,
+                        status: 'Pendente',
+                    },
+                },
+            },
+            include: {
+                items: true,
+                payment: true,
+            },
+        });
+        return order;
     }
-    findAll() {
-        return `This action returns all order`;
+    async findAll() {
+        return this.prisma.order.findMany({ include: { items: true, payment: true } });
     }
     findOne(id) {
-        return `This action returns a #${id} order`;
+        return this.prisma.order.findUnique({
+            where: { id },
+        });
     }
     update(id, updateOrderDto) {
         return `This action updates a #${id} order`;

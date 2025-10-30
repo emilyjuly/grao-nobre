@@ -18,13 +18,28 @@ const order_service_1 = require("./order.service");
 const create_order_dto_1 = require("./dto/create-order.dto");
 const update_order_dto_1 = require("./dto/update-order.dto");
 const swagger_1 = require("@nestjs/swagger");
+const address_service_1 = require("../address/address.service");
 let OrderController = class OrderController {
     orderService;
-    constructor(orderService) {
+    addressService;
+    constructor(orderService, addressService) {
         this.orderService = orderService;
+        this.addressService = addressService;
     }
-    create(createOrderDto) {
-        return this.orderService.create(createOrderDto);
+    async create(createOrderDto) {
+        const address = await this.addressService.create({
+            ...createOrderDto.address,
+            userId: createOrderDto.userId,
+        });
+        const order = await this.orderService.create({
+            ...createOrderDto,
+            addressId: address.id,
+        });
+        return {
+            message: 'Pedido realizado com sucesso!',
+            orderId: order.id,
+            estimatedDelivery: 'Disponível em 20 minutos',
+        };
     }
     findAll() {
         return this.orderService.findAll();
@@ -45,7 +60,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_order_dto_1.CreateOrderDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], OrderController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
@@ -78,6 +93,7 @@ __decorate([
 exports.OrderController = OrderController = __decorate([
     (0, swagger_1.ApiTags)('Orders'),
     (0, common_1.Controller)('order'),
-    __metadata("design:paramtypes", [order_service_1.OrderService])
+    __metadata("design:paramtypes", [order_service_1.OrderService,
+        address_service_1.AddressService])
 ], OrderController);
 //# sourceMappingURL=order.controller.js.map

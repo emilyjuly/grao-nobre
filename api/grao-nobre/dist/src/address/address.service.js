@@ -17,8 +17,20 @@ let AddressService = class AddressService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createAddressDto) {
-        return 'This action adds a new address';
+    async create(createAddressDto) {
+        const { userId, street, number, complement, neighborhood, city, state, zip_code } = createAddressDto;
+        return await this.prisma.address.create({
+            data: {
+                street,
+                number,
+                complement,
+                neighborhood,
+                city,
+                state,
+                zip_code,
+                userId,
+            },
+        });
     }
     findAll() {
         return `This action returns all address`;

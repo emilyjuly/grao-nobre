@@ -7,8 +7,22 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class AddressService {
   constructor(private prisma: PrismaService) {}
 
-  create(createAddressDto: CreateAddressDto) {
-    return 'This action adds a new address';
+  async create(createAddressDto: CreateAddressDto) {
+    const { userId, street, number, complement, neighborhood, city, state, zip_code } =
+      createAddressDto;
+
+    return await this.prisma.address.create({
+      data: {
+        street,
+        number,
+        complement,
+        neighborhood,
+        city,
+        state,
+        zip_code,
+        userId,
+      },
+    });
   }
 
   findAll() {

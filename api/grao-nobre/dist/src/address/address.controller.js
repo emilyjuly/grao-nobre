@@ -23,8 +23,9 @@ let AddressController = class AddressController {
     constructor(addressService) {
         this.addressService = addressService;
     }
-    create(createAddressDto) {
-        return this.addressService.create(createAddressDto);
+    async create(createAddressDto) {
+        const address = await this.addressService.create(createAddressDto);
+        return address;
     }
     findAll() {
         return this.addressService.findAll();
@@ -45,7 +46,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_address_dto_1.CreateAddressDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], AddressController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),

@@ -72,7 +72,7 @@ model Order {
 model OrderItem {
   id         Int     @id @default(autoincrement())
   quantity   Int
-  unit_price Decimal @db.Decimal(10, 2)
+  price Decimal @db.Decimal(10, 2)
 
   order   Order @relation(fields: [orderId], references: [id])
   orderId Int

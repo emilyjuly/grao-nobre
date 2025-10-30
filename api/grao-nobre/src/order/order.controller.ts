@@ -3,15 +3,33 @@ import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AddressService } from 'src/address/address.service';
 
 @ApiTags('Orders')
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly addressService: AddressService
+  ) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
+  async create(@Body() createOrderDto: CreateOrderDto) {
+    const address = await this.addressService.create({
+      ...createOrderDto.address,
+      userId: createOrderDto.userId,
+    });
+
+    const order = await this.orderService.create({
+      ...createOrderDto,
+      addressId: address.id,
+    });
+
+    return {
+      message: 'Pedido realizado com sucesso!',
+      orderId: order.id,
+      estimatedDelivery: 'Disponível em 20 minutos',
+    };
   }
 
   @Get()

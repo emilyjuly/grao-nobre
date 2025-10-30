@@ -75,7 +75,7 @@ async function main() {
                         {
                             productId: firstProduct.id,
                             quantity: 1,
-                            unit_price: firstProduct.price
+                            price: firstProduct.price
                         }
                     ]
                 },

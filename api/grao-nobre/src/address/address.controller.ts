@@ -10,8 +10,9 @@ export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
   @Post()
-  create(@Body() createAddressDto: CreateAddressDto) {
-    return this.addressService.create(createAddressDto);
+  async create(@Body() createAddressDto: CreateAddressDto) {
+    const address = await this.addressService.create(createAddressDto);
+    return address;
   }
 
   @Get()

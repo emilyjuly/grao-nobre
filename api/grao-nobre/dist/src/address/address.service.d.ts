@@ -4,7 +4,17 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export declare class AddressService {
     private prisma;
     constructor(prisma: PrismaService);
-    create(createAddressDto: CreateAddressDto): string;
+    create(createAddressDto: CreateAddressDto): Promise<{
+        number: number;
+        id: number;
+        street: string;
+        complement: string | null;
+        neighborhood: string;
+        city: string;
+        state: string;
+        zip_code: string;
+        userId: number;
+    }>;
     findAll(): string;
     findOne(id: number): string;
     update(id: number, updateAddressDto: UpdateAddressDto): string;
